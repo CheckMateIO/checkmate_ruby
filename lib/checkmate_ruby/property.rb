@@ -3,12 +3,9 @@ module Checkmate
     attr_accessor :name, :phone, :street, :city, :region, :postal_code
     
     def initialize(property_params)
-      name = property_params[:name]
-      phone = property_params[:phone]
-      street = property_params[:street]
-      city = property_params[:city]
-      region = property_params[:region]
-      postal_code = property_params[:postal_code]
+      property_params.each do |key, value|
+        instance_variable_set("@#{key}", value)
+      end
     end
 
     def to_uri_params

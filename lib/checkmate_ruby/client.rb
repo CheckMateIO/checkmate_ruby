@@ -16,37 +16,38 @@ module Checkmate
 
     def get_property(property_params)
       property = Property.new(property_params)
-      response = Request.new(
-        specific_uri(property),
-        method: :get,
-        params: property.to_uri_params,
-        headers: headers,
-        followlocation: true).run
-
-      handle_response_and_maybe_return_json(response)
+      request = create_request(property)
+      handle_response(request.run)
     end
 
-    def headers
-      headers = {
-        "Accept" => "application/json",
-        "X-CheckMate-API-Token" => private_key
-      }
-    end
+    private
+      def create_request(resource)
+        Request.new(
+          specific_uri(resource),
+          method: :get,
+          params: resource.to_uri_params,
+          headers: headers,
+          followlocation: true)
+      end
 
-    def handle_response_and_maybe_return_json(response)
-      if response.success?
-        JSON.parse(response.body)
-      elsif response.timed_out?
-        "timed out!"
-      elsif response.code == 0
-        response.return_message #something's gone wrong!
-      else
-        response.code.to_s #
+      def headers
+        headers = {
+          "Accept" => "application/json",
+          "X-CheckMate-API-Token" => private_key
+        }
+      end
+
+      def handle_response(response)
+        if response.success?
+          JSON.parse(response.body)
+        else
+          {:code => response.code,
+            :message => response.status_message}
+        end
+      end
+
+      def specific_uri(resource)
+        @@base_uri + resource.uri_path
       end
     end
-
-    def specific_uri(resource)
-      @@base_uri + resource.uri_path
-    end
-  end
 end
