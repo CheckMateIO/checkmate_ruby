@@ -8,16 +8,16 @@ module Checkmate
     @@base_uri = "https://partners-staging.checkmate.io"
     attr_accessor :private_key
 
-		def initialize(options = {})
-			options.each do |key, value|
-				instance_variable_set("@#{key}", value)
-			end
-		end
+    def initialize(options = {})
+      options.each do |key, value|
+        instance_variable_set("@#{key}", value)
+      end
+    end
 
     def get_property(property_params)
-			property = Property.new(property_params)
+      property = Property.new(property_params)
       response = Request.new(
-				specific_uri(property),
+        specific_uri(property),
         method: :get,
         params: property.to_uri_params,
         headers: headers,
