@@ -6,17 +6,20 @@ module Checkmate
     include Typhoeus
 
     @@base_uri = "https://partners-staging.checkmate.io"
-    attr_writer :private_key
+    attr_accessor :private_key
 
-    def initialize(private_key)
-      self.private_key = private_key
-    end
+		def initialize(options = {})
+			options.each do |key, value|
+				instance_variable_set("@#{key}", value)
+			end
+		end
 
     def get_property(property_params)
+			property = Property.new(property_params)
       response = Request.new(
-        properties_uri,
+				specific_uri(property),
         method: :get,
-        params: uri_params(property_params),
+        params: property.to_uri_params,
         headers: headers,
         followlocation: true).run
 
@@ -26,7 +29,7 @@ module Checkmate
     def headers
       headers = {
         "Accept" => "application/json",
-        "X-CheckMate-API-Token" => @private_key
+        "X-CheckMate-API-Token" => private_key
       }
     end
 
@@ -42,18 +45,8 @@ module Checkmate
       end
     end
 
-    def properties_uri
-      @@base_uri + "/properties"
-    end
-
-    def uri_params(property_params)
-      uri_params = {
-        "property[name]" => property_params[:name],
-        "property[phone]" => property_params[:phone],
-        "property[address][street]" => property_params[:street],
-        "property[address][city]" => property_params[:city],
-        "property[address][region]" => property_params[:region],
-        "property[address][postal_code]" => property_params[:postal_code]}
+    def specific_uri(resource)
+      @@base_uri + resource.uri_path
     end
   end
 end
