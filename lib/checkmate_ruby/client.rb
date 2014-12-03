@@ -1,5 +1,6 @@
 require 'typhoeus'
 require 'json'
+require 'checkmate_ruby/property'
 
 module Checkmate
   class Client
@@ -15,7 +16,7 @@ module Checkmate
     end
 
     def get_property(property_params)
-      property = Property.new(property_params)
+      property = Checkmate::Property.new(property_params)
       request = create_request(property)
       handle_response(request.run)
     end
