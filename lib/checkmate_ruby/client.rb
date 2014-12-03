@@ -1,28 +1,30 @@
-require 'typhoeus'
-require 'json'
+require 'checkmate_ruby/configuration'
 require 'checkmate_ruby/property'
+require 'json'
+require 'typhoeus'
 
 module Checkmate
   class Client
     include Typhoeus
+    extend Configuration
 
-    @@base_uri = "https://partners-staging.checkmate.io"
-    attr_accessor :private_key
+    attr_accessor *Configuration::VALID_OPTIONS
 
     def initialize(options = {})
-      options.each do |key, value|
-        instance_variable_set("@#{key}", value)
+      merged_options = Checkmate::Client.options.merge(options)
+      Configuration::VALID_OPTIONS.each do |key|
+        public_send("#{key}=", merged_options[key])
       end
     end
 
     def get_property(property_params)
       property = Checkmate::Property.new(property_params)
-      request = create_request(property)
+      request = create_get_request(property)
       handle_response(request.run)
     end
 
     private
-      def create_request(resource)
+      def create_get_request(resource)
         Request.new(
           specific_uri(resource),
           method: :get,
@@ -48,7 +50,7 @@ module Checkmate
       end
 
       def specific_uri(resource)
-        @@base_uri + resource.uri_path
+        api_url + resource.uri_path
       end
     end
 end
