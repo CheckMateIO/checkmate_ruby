@@ -1,10 +1,10 @@
 module Checkmate
-  class Property
+  class PropertyParams
     attr_accessor :name, :phone, :street, :city, :region, :postal_code
     
     def initialize(property_params)
       property_params.each do |key, value|
-        instance_variable_set("@#{key}", value)
+        public_send("#{key}=", value)
       end
     end
 

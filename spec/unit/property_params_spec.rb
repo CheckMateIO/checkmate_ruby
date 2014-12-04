@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
-describe Checkmate::Property do
-  let(:property) {Checkmate::Property.new({:name => "n", :phone => "123",
+describe Checkmate::PropertyParams do
+  let(:property) {Checkmate::PropertyParams.new({:name => "n", :phone => "123",
       :street => "1625", :city => "San", :region => "CA", :postal_code => "94115"})}
 
   it "returns correct path" do 

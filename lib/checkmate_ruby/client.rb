@@ -1,6 +1,7 @@
 require 'checkmate_ruby/configuration'
-require 'checkmate_ruby/property'
+require 'checkmate_ruby/property_params'
 require 'json'
+require 'hashie/mash'
 require 'typhoeus'
 
 module Checkmate
@@ -18,7 +19,7 @@ module Checkmate
     end
 
     def get_property(property_params)
-      property = Checkmate::Property.new(property_params)
+      property = Checkmate::PropertyParams.new(property_params)
       request = create_request("get", property)
       handle_response(request.run)
     end
@@ -42,7 +43,7 @@ module Checkmate
 
       def handle_response(response)
         if response.success?
-          JSON.parse(response.body)
+          Hashie::Mash.new(JSON.parse(response.body))
         else
           {:code => response.code,
             :message => response.status_message}
