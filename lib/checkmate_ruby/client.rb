@@ -19,15 +19,15 @@ module Checkmate
 
     def get_property(property_params)
       property = Checkmate::Property.new(property_params)
-      request = create_get_request(property)
+      request = create_request("get", property)
       handle_response(request.run)
     end
 
     private
-      def create_get_request(resource)
+      def create_request(method, resource)
         Request.new(
           specific_uri(resource),
-          method: :get,
+          method: method.to_sym,
           params: resource.to_uri_params,
           headers: headers,
           followlocation: true)
