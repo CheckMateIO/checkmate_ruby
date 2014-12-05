@@ -40,4 +40,18 @@ key.
 
 You can query the API for a property. All of the fields referenced in the query are required.
 
-   client.get_property({:name => "Hotel Kabuki", :phone => "14159223200", :address => {:street => "1625 Post St", :city => "San Francisco", :region => "CA", :postal_code => "94115"}}) 
+    client.get_property({:name => "Hotel Kabuki", :phone => "14159223200", :address => {:street => "1625 Post St", :city => "San Francisco", :region => "CA", :postal_code => "94115"}}) 
+
+### List reservations
+
+You can query the API for all your reservations or the reservations for a specific property.
+
+    client.list_reservations() #all reservations
+    client.list_reservations({:confirmation_num => "12349asdf"}) #reservations with that confirmation number
+    client.list_reservations({:property_id => 13434543}) #reservations for that property
+
+### Show reservation
+
+You can request a specific reservation from the Checkmate API.
+
+    client.show_reservation(123452) #reservation with id 123452  

@@ -25,8 +25,8 @@ module Checkmate
       handle_response(request.run)
     end
 
-    def list_reservations(reservation_params)
-      reservations_params = Checkmate::ReservationsParams.new(reservation_params)
+    def list_reservations(reservations_params)
+      reservations_params = Checkmate::ReservationsParams.new(reservations_params)
       request = create_request("get", reservations_params)
       handle_response(request.run) 
     end
