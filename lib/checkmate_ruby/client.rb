@@ -1,5 +1,6 @@
 require 'checkmate_ruby/configuration'
 require 'checkmate_ruby/property_params'
+require 'checkmate_ruby/param_utils'
 require 'json'
 require 'hashie/mash'
 require 'typhoeus'
@@ -19,8 +20,8 @@ module Checkmate
     end
 
     def get_property(property_params)
-      property = Checkmate::PropertyParams.new(property_params)
-      request = create_request("get", property)
+      property_params = Checkmate::PropertyParams.new(property_params)
+      request = create_request("get", property_params)
       handle_response(request.run)
     end
 

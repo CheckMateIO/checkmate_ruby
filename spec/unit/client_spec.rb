@@ -3,8 +3,8 @@ require_relative '../spec_helper'
 describe Checkmate::Client do
   before(:all) do
     @private_key = "private_key"
-    @property_params = {:name => "n", :phone => "123", :street => "1625",
-      :city => "San", :region => "CA", :postal_code => "94115"}
+    @property_params = {:name => "n", :phone => "123",
+      :address => {:street => "1625", :city => "San", :region => "CA", :postal_code => "94115"}}
   end
 
   let(:client) {Checkmate::Client.new({:private_key => @private_key})}

@@ -1,4 +1,4 @@
-require 'queryparams'
+require 'checkmate_ruby/param_utils'
 
 module Checkmate
   class PropertyParams
@@ -9,7 +9,7 @@ module Checkmate
     end
 
     def to_uri_params
-      QueryParams.encode({:property => property_params}) 
+      ParamUtils.encode({:property => property_params}) 
     end
 
     def uri_path
