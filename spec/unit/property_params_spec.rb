@@ -1,5 +1,5 @@
 require_relative '../spec_helper'
-require 'uri'
+require 'cgi'
 
 describe Checkmate::PropertyParams do
   let(:property_params) {Checkmate::PropertyParams.new({:name => "n%&", :phone => "123",
