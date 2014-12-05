@@ -1,3 +1,5 @@
+require 'cgi'
+
 module Checkmate
   class QueryParamUtils
     def self.encode(value, key = nil)
