@@ -1,6 +1,5 @@
 require 'checkmate_ruby/configuration'
 require 'checkmate_ruby/property_params'
-require 'checkmate_ruby/param_utils'
 require 'json'
 require 'hashie/mash'
 require 'typhoeus'

@@ -1,5 +1,5 @@
 module Checkmate
-  class ParamUtils
+  class QueryParamUtils
     def self.encode(value, key = nil)
       case value
       when Hash  then value.map { |k,v| encode(v, append_key(key,k)) }.join('&')

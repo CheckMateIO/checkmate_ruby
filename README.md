@@ -40,4 +40,4 @@ key.
 
 You can query the API for a property. All of the fields referenced in the query are required.
 
-   client.get_property({:name => "Hotel Kabuki", :phone => "14159223200", :street => "1625 Post St", :city => "San Francisco", :region => "CA", :postal_code => "94115"}) 
+   client.get_property({:name => "Hotel Kabuki", :phone => "14159223200", :address => {:street => "1625 Post St", :city => "San Francisco", :region => "CA", :postal_code => "94115"}}) 
