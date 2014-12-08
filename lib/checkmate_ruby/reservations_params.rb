@@ -19,13 +19,11 @@ module Checkmate
 
     def uri_path
       if property_id
-        if reservation_id
-          "/reservations"
-        else
-          "/reservations/#{reservation_id}"
-        end
-      else
         "/properties/#{property_id}/reservations"
+      elsif reservation_id
+        "/reservations/#{reservation_id}"
+      else
+          "/reservations"
       end
     end
   end
