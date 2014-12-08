@@ -6,9 +6,9 @@ module Checkmate
     def self.encode(value, key = nil)
       case value
       when Hash  then value.map { |k,v| encode(v, append_key(key,k)) } \
-          .reject {|pair| pair == ''}.join('&')
+          .reject {|pair| pair.empty?}.join('&')
       when Array then value.map { |v| encode(v, "#{key}[]") } \
-          .reject {|pair| pair == ''}.join('&')
+          .reject {|pair| pair.empty?}.join('&')
       when nil   then ''
       else            
         "#{key}=#{CGI.escape(value.to_s)}" 
