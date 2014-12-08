@@ -1,5 +1,4 @@
 require 'cgi'
-require 'pp'
 
 module Checkmate
   class QueryParamUtils
