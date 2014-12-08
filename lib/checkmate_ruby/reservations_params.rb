@@ -12,16 +12,14 @@ module Checkmate
 
     def to_uri_params
       uri_params = {}
-      uri_params["confirmation_number"] = confirmation_number \
-          unless confirmation_number.nil?
-      uri_params["exclude_properties"] = exclude_properties \
-          unless exclude_properties.nil?
+      uri_params["confirmation_number"] = confirmation_number if confirmation_number
+      uri_params["exclude_properties"] = exclude_properties if exclude_properties
       QueryParamUtils.encode(uri_params)
     end
 
     def uri_path
-      if property_id.nil?
-        if reservation_id.nil?
+      if property_id
+        if reservation_id
           "/reservations"
         else
           "/reservations/#{reservation_id}"
