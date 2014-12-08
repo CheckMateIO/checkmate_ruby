@@ -6,6 +6,10 @@ describe Checkmate::QueryParamUtils do
     expect(Checkmate::QueryParamUtils.encode(nil)).to eq ""
   end
 
+  it "ignores keys with null values" do
+    expect(Checkmate::QueryParamUtils.encode({a: 1, b: nil, c: 2})).to eq "a=1&c=2"
+  end 
+
   it "generates a straight-forward query string" do
     expect(Checkmate::QueryParamUtils.encode({a: 1, b: "c"})).to eq "a=1&b=c"
   end

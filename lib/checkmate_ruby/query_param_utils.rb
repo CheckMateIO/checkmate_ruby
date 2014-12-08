@@ -1,11 +1,14 @@
 require 'cgi'
+require 'pp'
 
 module Checkmate
   class QueryParamUtils
     def self.encode(value, key = nil)
       case value
-      when Hash  then value.map { |k,v| encode(v, append_key(key,k)) }.join('&')
-      when Array then value.map { |v| encode(v, "#{key}[]") }.join('&')
+      when Hash  then value.map { |k,v| encode(v, append_key(key,k)) } \
+          .reject {|pair| pair == ''}.join('&')
+      when Array then value.map { |v| encode(v, "#{key}[]") } \
+          .reject {|pair| pair == ''}.join('&')
       when nil   then ''
       else            
         "#{key}=#{CGI.escape(value.to_s)}" 
