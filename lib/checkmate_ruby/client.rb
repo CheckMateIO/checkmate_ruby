@@ -1,6 +1,7 @@
 require 'checkmate_ruby/configuration'
 require 'checkmate_ruby/property_params'
 require 'checkmate_ruby/reservations_params'
+require 'checkmate_ruby/reservation'
 require 'json'
 require 'hashie/mash'
 require 'typhoeus'
