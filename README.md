@@ -80,6 +80,11 @@ creating a new property within the request.
         :last_name => "smith", :email => "frank@smith.io", :start_on => "12/12/2016", :end_on => "12/14/2016", \
         :property => {:name => "New Hotel", :address => {:street => "123 Leaf Lane", :country_code => "US"}}})
 
+    # or like this
+    client.create_reservation({:external_id => "someid123", :confirmation_number => "sdlfkjweo324", \
+        :last_name => "smith", :email => "frank@smith.io", :start_on => "12/12/2016", :end_on => "12/14/2016", \
+        :property => {:name => "New Hotel", :full_address => "123 Leaf Lane, Blue City, FG, 12345, US"}})
+
 ### Update reservation
 
 You can update an existing reservation in Checkmate using a reservation_id
