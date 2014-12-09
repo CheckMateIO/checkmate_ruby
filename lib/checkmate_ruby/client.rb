@@ -1,7 +1,7 @@
 require 'checkmate_ruby/configuration'
 require 'checkmate_ruby/property_params'
-require 'checkmate_ruby/reservations_params'
 require 'checkmate_ruby/reservation_params'
+require 'checkmate_ruby/reservations_params'
 require 'json'
 require 'hashie/mash'
 require 'typhoeus'
@@ -36,6 +36,12 @@ module Checkmate
       reservations_params = Checkmate::ReservationsParams.new({:reservation_id => reservation_id})
       request = create_request("get", reservations_params)
       handle_response(request.run) 
+    end
+
+    def create_reservation(reservation_params, property_id = nil)
+      reservation_params = Checkmate::ReservationParams.new(reservation_params, property_id)
+      request = create_request("put", reservation_params)
+      handle_response(request.run)
     end
 
     private

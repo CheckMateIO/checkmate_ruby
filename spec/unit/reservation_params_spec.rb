@@ -1,11 +1,11 @@
 require_relative '../spec_helper'
 
 describe Checkmate::ReservationParams do
-  let(:reservation_with_property_id) {Checkmate::ReservationParams.new({:last_name => "n"}, {}, 1234)}
+  let(:reservation_with_property_id) {Checkmate::ReservationParams.new({:last_name => "n"}, 1234)}
 
-  let(:reservation_with_property_params_fa) {Checkmate::ReservationParams.new({:last_name => "n"}, {:name => "hotel", :full_address => "freeform"})}
+  let(:reservation_with_property_params_fa) {Checkmate::ReservationParams.new({:last_name => "n", :property => {:name => "hotel", :full_address => "freeform"}}, nil)}
 
-  let(:reservation_with_property_params_sa) {Checkmate::ReservationParams.new({:last_name => "n"}, {:name => "hotel", :address => {:street => "bah"}})}
+  let(:reservation_with_property_params_sa) {Checkmate::ReservationParams.new({:last_name => "n", :property => {:name => "hotel", :address => {:street => "bah"}}}, nil)}
 
   it "uses a property id if provided" do
     expect(reservation_with_property_id.uri_path).to eq("/properties/1234/reservations")
