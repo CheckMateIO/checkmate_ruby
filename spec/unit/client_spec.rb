@@ -7,6 +7,8 @@ describe Checkmate::Client do
       :address => {:street => "1625", :city => "San", :region => "CA", :postal_code => "94115"}}
     @reservations_params = {:exclude_properties => true}
     @reservation_id = 123
+    @reservation_params = {:last_name => "foo", :property => {:name => "hotel", :full_address => "bar"}}
+    @update_reservation_params = {:last_name => "foo"}
   end
 
   let(:client) {Checkmate::Client.new({:private_key => @private_key})}
@@ -38,5 +40,23 @@ describe Checkmate::Client do
     stub_response = Typhoeus::Response.new(code: 200, body: "{\"h\":\"g\"}")
     Typhoeus.stub(/checkmate/).and_return(stub_response)
     expect(client.show_reservation(@reservation_id)).to eq({"h" => "g"})
+  end
+
+  it "handles a success response for creating a reservation" do
+    stub_response = Typhoeus::Response.new(code: 200, body: "{\"h\":\"g\"}")
+    Typhoeus.stub(/checkmate/).and_return(stub_response)
+    expect(client.create_reservation(@reservation_params)).to eq({"h" => "g"})
+  end
+
+  it "handles a success response for updating a reservation" do
+    stub_response = Typhoeus::Response.new(code: 200, body: "{\"h\":\"g\"}")
+    Typhoeus.stub(/checkmate/).and_return(stub_response)
+    expect(client.update_reservation(@reservation_id, @update_reservation_params)).to eq({"h" => "g"})
+  end
+
+  it "handles a success response for deleting a reservation" do
+    stub_response = Typhoeus::Response.new(code: 200, body: "{\"h\":\"g\"}")
+    Typhoeus.stub(/checkmate/).and_return(stub_response)
+    expect(client.delete_reservation(@reservation_id)).to eq({"h" => "g"})
   end
 end
