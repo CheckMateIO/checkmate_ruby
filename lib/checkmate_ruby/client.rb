@@ -2,6 +2,8 @@ require 'checkmate_ruby/configuration'
 require 'checkmate_ruby/property_params'
 require 'checkmate_ruby/reservation_params'
 require 'checkmate_ruby/reservations_params'
+require 'checkmate_ruby/delete_reservation_params'
+require 'checkmate_ruby/update_reservation_params'
 require 'json'
 require 'hashie/mash'
 require 'typhoeus'
@@ -40,7 +42,19 @@ module Checkmate
 
     def create_reservation(reservation_params, property_id = nil)
       reservation_params = Checkmate::ReservationParams.new(reservation_params, property_id)
-      request = create_request("put", reservation_params)
+      request = create_request("post", reservation_params)
+      handle_response(request.run)
+    end
+
+    def update_reservation(reservation_id, reservation_params)
+      update_params = Checkmate::UpdateReservationParams.new(reservation_id, reservation_params)
+      request = create_request("patch", update_params)
+      handle_response(request.run)
+    end
+
+    def delete_reservation(reservation_id)
+      delete_params = Checkmate::DeleteReservationParams.new(reservation_id)
+      request = create_request("delete", delete_params)
       handle_response(request.run)
     end
 

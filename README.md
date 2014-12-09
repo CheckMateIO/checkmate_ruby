@@ -53,7 +53,7 @@ You can query the API for all your reservations or the reservations for a specif
     # all reservations
     client.list_reservations()
 
-    # reservations with that confirmation number
+    # reservations with a specific confirmation number
     client.list_reservations({:confirmation_num => "12349asdf"})
 
     # reservations for property with id 13434543
@@ -65,3 +65,31 @@ You can request a specific reservation from the Checkmate API.
 
     # reservation with id 123452  
     client.show_reservation(123452)
+
+### Create reservation
+
+You can create a reservation in Checkmate using either an existing property id, or by
+creating a new property within the request.
+
+    # reservation under property 93
+    client.create_reservation({:external_id => "someid123", :confirmation_number => "sdlfkjweo324", \
+        :last_name => "smith", :email => "frank@smith.io", :start_on => "12/12/2016", :end_on => "12/14/2016"}, 93)
+
+    # creating a new property
+    client.create_reservation({:external_id => "someid123", :confirmation_number => "sdlfkjweo324", \
+        :last_name => "smith", :email => "frank@smith.io", :start_on => "12/12/2016", :end_on => "12/14/2016", \
+        :property => {:name => "New Hotel", :address => {:street => "123 Leaf Lane", :country_code => "US"}}})
+
+### Update reservation
+
+You can update an existing reservation in Checkmate using a reservation_id
+
+    # reservation id 12345
+    client.update_reservation(12345, {:first_name => "Bob", :room_code => "STDK"})
+
+### Delete reservation
+
+You can delete an existing reservation in Checkmate using a reservation_id
+
+    # reservation id 12345
+    client.delete_reservation(12345)
