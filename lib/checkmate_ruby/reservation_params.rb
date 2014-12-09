@@ -1,5 +1,5 @@
 module Checkmate
-  class Reservation
+  class ReservationParams
     attr_accessor :reservation_params
 
     #required if a property is not being created
