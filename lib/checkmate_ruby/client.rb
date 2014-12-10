@@ -83,10 +83,13 @@ module Checkmate
       end
 
       def handle_response(response)
-        pp response
         if response.success?
-          JSON.parse(response.body)
-          #Hashie::Mash.new(JSON.parse(response.body))
+          data = JSON.parse(response.body)
+          if data.kind_of?(Array)
+            data.map {|r| Hashie::Mash.new(r) }
+          else
+            Hashie::Mash.new(data)
+          end
         else
           {:code => response.code,
             :message => response.status_message}

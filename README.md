@@ -101,7 +101,7 @@ You can delete an existing reservation in Checkmate using a reservation_id
 
 ### Bulk create reservations
 
-Each reservation follows the same format as a single reservation.
+Each reservation follows the same format as a single reservation (an optional webhook can be added at the end).
 
     client.bulk_create_reservations([ \
       {:external_id => "fdoo", :confirmation_number => "sdlfkjweo324", :last_name => "smith", :email => "f@b.io", \
@@ -109,4 +109,5 @@ Each reservation follows the same format as a single reservation.
        :full_address => "487 Bryant St, San Francisco, CA 94105, US"}},
       {:external_id => "hfg34", :confirmation_number => "gjhhffgh456", :last_name => "brown", :email => "ff@b.io", \
        :start_on => "12/12/2015", :end_on => "12/14/2015", :property => {:name => "New Hotel", \
-       :full_address => "487 Bryant St, San Francisco, CA 94105, US"}}])
+       :full_address => "487 Bryant St, San Francisco, CA 94105, US"}}],
+      "https://yourdomain.com/new_reservations")

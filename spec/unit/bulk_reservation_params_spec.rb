@@ -14,11 +14,10 @@ describe Checkmate::BulkReservationParams do
     expect(bulk.uri_path).to eq("/reservations/bulk_create")
   end
 
-  it "encodes the reservations in the body" do
-    json = JSON.parse(bulk.to_json)["reservations"]
-    expect(json[0]["external_id"]).to eq("123")
-    expect(json[1]["external_id"]).to eq("456")
-    expect(json[2]["external_id"]).to eq("789")
+  it "encodes the reservations in the params" do
+    uri_params = CGI::parse(bulk.to_uri_params)
+    expect(uri_params["reservations[][external_id]"]).to eq(["123", "456", "789"])
+    expect(uri_params["reservations[][last_name]"]).to eq(["smith", "brown", "hatter"])
   end 
 
   it "puts the webhook into the uri parameters" do
