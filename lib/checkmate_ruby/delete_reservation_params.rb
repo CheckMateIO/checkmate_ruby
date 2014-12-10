@@ -13,7 +13,5 @@ module Checkmate
     def uri_path
       "/reservations/#{reservation_id}"
     end
-
-    def to_json; end
   end
 end

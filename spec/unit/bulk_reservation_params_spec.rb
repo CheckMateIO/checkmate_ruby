@@ -8,6 +8,7 @@ describe Checkmate::BulkReservationParams do
   end
 
   let(:bulk) {Checkmate::BulkReservationParams.new([@reservation1, @reservation2, @reservation3], nil)}
+  let(:bulk_webhook) {Checkmate::BulkReservationParams.new([@reservation1, @reservation2, @reservation3], "https")}
 
   it "returns the bulk path" do
     expect(bulk.uri_path).to eq("/reservations/bulk_create")
@@ -19,4 +20,9 @@ describe Checkmate::BulkReservationParams do
     expect(json[1]["external_id"]).to eq("456")
     expect(json[2]["external_id"]).to eq("789")
   end 
+
+  it "puts the webhook into the uri parameters" do
+    uri_params = CGI::parse(bulk_webhook.to_uri_params)
+    expect(uri_params["webhook"]).to eq(["https"])
+  end
 end

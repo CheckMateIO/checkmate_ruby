@@ -8,11 +8,7 @@ module Checkmate
     end
 
     def to_uri_params
-      Checkmate::QueryParamUtil.encode({:webhook => webhook})
-    end
-
-    def to_json
-     JSON.generate({:reservations => reservations})
+      Checkmate::QueryParamUtils.encode({:reservations => reservations, :webhook => webhook})
     end
 
     def uri_path

@@ -26,7 +26,5 @@ module Checkmate
         "/reservations"
       end
     end
-    
-    def to_json; end
   end
 end

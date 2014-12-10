@@ -71,7 +71,6 @@ module Checkmate
           specific_uri(resource),
           method: method.to_sym,
           params: resource.to_uri_params,
-          body: resource.to_json,
           headers: headers,
           followlocation: true)
       end
@@ -84,8 +83,10 @@ module Checkmate
       end
 
       def handle_response(response)
+        pp response
         if response.success?
-          Hashie::Mash.new(JSON.parse(response.body))
+          JSON.parse(response.body)
+          #Hashie::Mash.new(JSON.parse(response.body))
         else
           {:code => response.code,
             :message => response.status_message}
