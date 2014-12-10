@@ -15,5 +15,7 @@ module Checkmate
     def uri_path
       "/properties"
     end
+
+    def to_json; end
   end
 end

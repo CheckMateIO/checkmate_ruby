@@ -1,3 +1,4 @@
+require 'checkmate_ruby/bulk_reservation_params'
 require 'checkmate_ruby/configuration'
 require 'checkmate_ruby/property_params'
 require 'checkmate_ruby/reservation_params'
@@ -58,12 +59,19 @@ module Checkmate
       handle_response(request.run)
     end
 
+    def bulk_create_reservations(reservations, webhook = nil)
+      reservation_params = Checkmate::BulkReservationParams.new(reservations, webhook)
+      request = create_request("post", reservation_params)
+      handle_response(request.run)
+    end
+
     private
       def create_request(method, resource)
         Request.new(
           specific_uri(resource),
           method: method.to_sym,
           params: resource.to_uri_params,
+          body: resource.to_json,
           headers: headers,
           followlocation: true)
       end

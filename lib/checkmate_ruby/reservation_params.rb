@@ -17,5 +17,7 @@ module Checkmate
     def uri_path
       property_id ? "/properties/#{property_id}/reservations" : "/reservations"
     end
+
+    def to_json; end
   end
 end
