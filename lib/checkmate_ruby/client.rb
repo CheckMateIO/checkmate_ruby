@@ -1,3 +1,4 @@
+require 'checkmate_ruby/bulk_reservation_params'
 require 'checkmate_ruby/configuration'
 require 'checkmate_ruby/property_params'
 require 'checkmate_ruby/reservation_params'
@@ -58,6 +59,12 @@ module Checkmate
       handle_response(request.run)
     end
 
+    def bulk_create_reservations(reservations, webhook = nil)
+      reservation_params = Checkmate::BulkReservationParams.new(reservations, webhook)
+      request = create_request("post", reservation_params)
+      handle_response(request.run)
+    end
+
     private
       def create_request(method, resource)
         Request.new(
@@ -77,7 +84,12 @@ module Checkmate
 
       def handle_response(response)
         if response.success?
-          Hashie::Mash.new(JSON.parse(response.body))
+          data = JSON.parse(response.body)
+          if data.kind_of?(Array)
+            data.map {|r| Hashie::Mash.new(r) }
+          else
+            Hashie::Mash.new(data)
+          end
         else
           {:code => response.code,
             :message => response.status_message}

@@ -59,4 +59,10 @@ describe Checkmate::Client do
     Typhoeus.stub(/checkmate/).and_return(stub_response)
     expect(client.delete_reservation(@reservation_id)).to eq({"h" => "g"})
   end
+
+  it "handles a success response for bulk creating reservations" do
+    stub_response = Typhoeus::Response.new(code: 200, body: "[{\"h\":\"g\"}, {\"f\":\"e\"}]")
+    Typhoeus.stub(/checkmate/).and_return(stub_response)
+    expect(client.bulk_create_reservations([@reservation_params])).to eq([{"h" => "g"}, {"f" => "e"}])
+  end
 end
