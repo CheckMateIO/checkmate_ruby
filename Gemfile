@@ -1,7 +1,3 @@
-source :rubygems
+source 'https://rubygems.org'
 
-gem 'typhoeus'
-
-group :test do
-  gem 'rake'
-end
+gemspec
